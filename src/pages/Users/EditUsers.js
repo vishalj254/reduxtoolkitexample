@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -12,17 +12,20 @@ export default React.memo(({ id, open, handleClose }) => {
   const user = useSelector((state) => reduxUserById(state, id));
   const dispatch = useDispatch();
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    let body = {
-      ...user,
-      id: id,
-      login: event.target.elements.login.value,
-      avatar_url: event.target.elements.avatar_url.value,
-    };
-    dispatch(SET_USERS([body.id, body]));
-    handleClose();
-  };
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      let body = {
+        ...user,
+        id: id,
+        login: event.target.elements.login.value,
+        avatar_url: event.target.elements.avatar_url.value,
+      };
+      dispatch(SET_USERS([body.id, body]));
+      handleClose();
+    },
+    [dispatch, handleClose, id, user]
+  );
 
   return (
     <div>
