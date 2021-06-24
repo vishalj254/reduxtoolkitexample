@@ -1,6 +1,7 @@
 import "./App.css";
 import Users from "./pages/Users";
 import Header from "./pages/Header";
+import Footer from "./pages/Footer";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <header className="App-header">
         <Users />
       </header>
+      <Footer />
     </div>
   );
 }

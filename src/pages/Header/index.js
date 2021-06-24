@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -76,8 +76,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
-  const usersLen = Object.keys(useSelector(reduxUser)).length;
+export default React.memo(() => {
+  const users = useSelector(reduxUser);
+  const usersLen = useMemo(() => Object.keys(users).length, [users]);
   const classes = useStyles();
 
   return (
@@ -120,4 +121,4 @@ export default function Header() {
       </AppBar>
     </div>
   );
-}
+});

@@ -4,12 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useSelector, useDispatch } from "react-redux";
 import { reduxUserById, SET_USERS } from "../../store/reducer";
 
-export default function EditUsers({ id, open, handleClose }) {
+export default React.memo(({ id, open, handleClose }) => {
   const user = useSelector((state) => reduxUserById(state, id));
   const dispatch = useDispatch();
 
@@ -33,13 +32,10 @@ export default function EditUsers({ id, open, handleClose }) {
         aria-labelledby="form-dialog-title"
       >
         <form onSubmit={onSubmit}>
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {user && user.login ? "Edit User" : "Add User"}
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
-            </DialogContentText>
-
             <TextField
               autoFocus
               margin="dense"
@@ -49,8 +45,8 @@ export default function EditUsers({ id, open, handleClose }) {
               defaultValue={(user && user.login) || ""}
               fullWidth
             />
+
             <TextField
-              autoFocus
               margin="dense"
               id="url"
               name="avatar_url"
@@ -72,4 +68,4 @@ export default function EditUsers({ id, open, handleClose }) {
       </Dialog>
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Users() {
+export default React.memo(() => {
   const users = useSelector(reduxUser);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -104,7 +104,7 @@ export default function Users() {
         </Button>
       </div>
       <div className={classes.main}>
-        {Object.values(users).map((item) => (
+        {useMemo(() => Object.values(users), [users]).map((item) => (
           <Card key={item.id} className={classes.root}>
             <CardContent>
               <div className={classes.avatarRoot}>
@@ -134,4 +134,4 @@ export default function Users() {
       )}
     </>
   );
-}
+});
