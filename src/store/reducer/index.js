@@ -32,7 +32,7 @@ export const { SET_USERS, SET_MULTIPLE_USERS, DELETE_USERS } =
   rootReducer.actions;
 
 export const reduxUser = (state) => {
-  console.log("----->", state.users);
+  // console.log("----->", state.users);
   return state.users.usersList;
 };
 

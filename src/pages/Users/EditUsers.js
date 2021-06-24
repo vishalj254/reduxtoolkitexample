@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useSelector, useDispatch } from "react-redux";
-import { reduxUserById, SET_USERS } from "../store/reducer";
+import { reduxUserById, SET_USERS } from "../../store/reducer";
 
 export default function EditUsers({ id, open, handleClose }) {
   const user = useSelector((state) => reduxUserById(state, id));
@@ -17,6 +17,7 @@ export default function EditUsers({ id, open, handleClose }) {
     event.preventDefault();
     let body = {
       ...user,
+      id: id,
       login: event.target.elements.login.value,
       avatar_url: event.target.elements.avatar_url.value,
     };
@@ -45,7 +46,7 @@ export default function EditUsers({ id, open, handleClose }) {
               id="login"
               name="login"
               label="Login"
-              defaultValue={user.login}
+              defaultValue={(user && user.login) || ""}
               fullWidth
             />
             <TextField
@@ -54,7 +55,7 @@ export default function EditUsers({ id, open, handleClose }) {
               id="url"
               name="avatar_url"
               label="Avatar URL"
-              defaultValue={user.avatar_url}
+              defaultValue={(user && user.avatar_url) || ""}
               type="url"
               fullWidth
             />

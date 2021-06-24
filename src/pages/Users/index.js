@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import { DELETE_USERS, reduxUser, setUsersAsync } from "../store/reducer";
+import { DELETE_USERS, reduxUser, setUsersAsync } from "../../store/reducer";
 import { Avatar } from "@material-ui/core";
 import Swal from "sweetalert2";
 import EditUsers from "./EditUsers";
@@ -44,12 +44,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  margin: {
+    margin: 10,
+  },
 }));
 
 export default function Users() {
   const users = useSelector(reduxUser);
   const dispatch = useDispatch();
-  console.log(users);
   const classes = useStyles();
   const [open, setOpen] = useState({ show: false, id: 0 });
 
@@ -83,9 +85,24 @@ export default function Users() {
 
   return (
     <>
-      <Button size="small" onClick={() => dispatch(setUsersAsync())}>
-        Learn More
-      </Button>
+      <div className={[classes.main, classes.margin]}>
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={() => dispatch(setUsersAsync())}
+          className={classes.margin}
+        >
+          Fetch All Users (Async)
+        </Button>
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={() => handleOpen(new Date().valueOf())}
+          className={classes.margin}
+        >
+          Add User
+        </Button>
+      </div>
       <div className={classes.main}>
         {Object.values(users).map((item) => (
           <Card key={item.id} className={classes.root}>
